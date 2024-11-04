@@ -1,18 +1,21 @@
 import './App.css';
 import TodoList from './Components/TodoList/TodoList';
+import FormTodo from './Components/FormTodo/FormTodo';
 import { Todo } from './types';
 import './App.scss';
+import { useState } from 'react';
 
 const App = () => {
-const todos: Todo[] = [
-  { title: 'Learn TypeScript', id: 1 },
-  { title: 'Build a React app', id: 2 },
-  { title: 'Write unit tests', id: 3 },
-];
+  const [todoList, setTodoList] = useState<Todo[]>([]);
+  const onAdd = (newTodo: Todo) => {
+    setTodoList(currentTodos => [ newTodo, ...currentTodos])
+  }
   return (
     <div className='app'>
       <div className='app__todo'>
-        <TodoList todo={todos}/>
+        <h2>Add todo task</h2>
+        <FormTodo onAdd={onAdd} todo={todoList}/>
+        <TodoList todo={todoList}/>
       </div>
     </div>
   );

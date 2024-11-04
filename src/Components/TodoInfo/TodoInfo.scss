@@ -45,4 +45,10 @@
         color: white;
         transform: scale(1.1);
     }
+
+    &__button--submit:hover {
+        background-color: lightgreen;
+        color: white;
+        transform: scale(1.1);
+    }
 }
