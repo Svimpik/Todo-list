@@ -1,24 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import TodoList from './Components/TodoList/TodoList';
+import { Todo } from './types';
+import './App.scss';
 
-function App() {
+const App = () => {
+const todos: Todo[] = [
+  { title: 'Learn TypeScript', id: 1 },
+  { title: 'Build a React app', id: 2 },
+  { title: 'Write unit tests', id: 3 },
+];
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='app'>
+      <div className='app__todo'>
+        <TodoList todo={todos}/>
+      </div>
     </div>
   );
 }
