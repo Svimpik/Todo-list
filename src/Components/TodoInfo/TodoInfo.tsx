@@ -4,13 +4,15 @@ import './TodoInfo.scss';
 
 interface Props {
     todo: Todo;
+    onDelete: (id: number) => void;
 }
 
-const TodoInfo: React.FC<Props> = ({ todo }) => {
+const TodoInfo: React.FC<Props> = ({ todo, onDelete}) => {
     const [editTitle, setEditTitle] = useState(todo.title);
     const [isEditing, setIsEditing] = useState(false);
     const [taskError, setTaskError] = useState('');
     const [error, setError] = useState(false);
+    const [append, setAppend] = useState(false);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEditTitle(event.target.value);
@@ -35,11 +37,26 @@ const TodoInfo: React.FC<Props> = ({ todo }) => {
         setIsEditing(false);
     }
 
+    const handleDelete = () => {
+        onDelete(todo.id);
+    }
+
+    const handleSubmit = () => {
+        setAppend(true);
+
+        setTimeout(() => onDelete(todo.id), 15000)
+    }
+
     return (
         <>
-        <li className="todo-list__item">
+        <li className={`todo-list__item ${append ? 'todo-list__item--disabled' : ''}`}>
             <article className="todo-list__todo">
-                <button className="todo-list__button todo-list__button--append">Append</button>
+                    <button
+                        className="todo-list__button todo-list__button--append"
+                        onClick={handleSubmit}
+                    >
+                        Append
+                    </button>
                 {isEditing ? (
                 <input
                     type="text"
@@ -49,7 +66,7 @@ const TodoInfo: React.FC<Props> = ({ todo }) => {
                     onChange={handleChange}
                     autoFocus
                     onBlur={handleSave}
-                />
+                    />
                 ) : (
                 <p className="todo-list__title">{editTitle}</p>        
                 )}    
@@ -57,10 +74,16 @@ const TodoInfo: React.FC<Props> = ({ todo }) => {
                 <button
                     className="todo-list__button todo-list__button--edit"
                     onClick={handleEditClick}
-                >
+                    disabled={append}
+                    >
                     Edit
                 </button>
-                <button className="todo-list__button todo-list__button--delete">Delete</button>
+                <button
+                    className="todo-list__button todo-list__button--delete"
+                        onClick={handleDelete}
+                    >
+                    Delete
+                </button>
             </article>
             </li>
             {error && <p>{taskError}</p>}

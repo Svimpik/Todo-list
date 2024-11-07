@@ -38,6 +38,8 @@ const FormTodo: React.FC<Props> = ({ onAdd, todo }) => {
             id: maxId,
         }
 
+        console.log(maxId);
+
         onAdd(newTodo);
         setTitle('');
     }
